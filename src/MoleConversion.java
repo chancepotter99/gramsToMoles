@@ -24,13 +24,15 @@ public class MoleConversion {
 		if (element.equalsIgnoreCase("C") || element.equalsIgnoreCase("Carbon")) {
 			carbon(console);
 			
+		} else {
+			System.out.println("I don't know the element: " + element);
 		}
 	}
 	
 	public static void carbon(Scanner console) {
 		System.out.println("Grams: ");
 		double grams = console.nextDouble();
-		double mole = grams / 12.01;
+		double mole = grams / 12.01; // change molar mass to a variable
 		System.out.println(grams + " g of Carbon is " + mole + " moles.");
 	}
 
