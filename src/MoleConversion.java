@@ -33,7 +33,7 @@ public class MoleConversion {
 		System.out.println("Grams: ");
 		double grams = console.nextDouble();
 		double mole = grams / 12.01; // change molar mass to a variable
-		System.out.println(grams + " g of Carbon is " + mole + " moles.");
+		System.out.format(grams + " g of Carbon is %.4f moles.%n", mole);
 	}
 
 }
