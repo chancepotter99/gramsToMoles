@@ -21,28 +21,29 @@ public class MoleConversion {
 	public static void converter(Scanner console) {
 		System.out.println("What element is being converted?");
 		String input = console.next();
-		element(input, console);
+		testElementInput(input, console);
 
 	}
 
-	public static void element(String input, Scanner console) {
+	public static void testElementInput(String input, Scanner console) {
 		double molarMass;
-		if (input.equalsIgnoreCase("H") || input.equalsIgnoreCase("Hydrogen")) {
-			molarMass = 1.008;
-			output(input, console, molarMass);
-		} else if (input.equalsIgnoreCase("N") || input.equalsIgnoreCase("Nitrogen")) {
-			molarMass = 14.01;
-			output(input, console, molarMass);
-		} else if (input.equalsIgnoreCase("O") || input.equalsIgnoreCase("Oxygen")) {
-			molarMass = 16.00;
-			output(input, console, molarMass);
-		} else if (input.equalsIgnoreCase("C") || input.equalsIgnoreCase("Carbon")) {
-			molarMass = 12.01;
-			output(input, console, molarMass);
-		} else {
+		boolean found = false;
+		List<Element> elements = new ArrayList<Element>();
+		elements.add(new Element("H", "Hydrogen", 1.008));
+		elements.add(new Element("N", "Nitrogen", 14.01));
+		elements.add(new Element("O", "Oxygen", 16.00));
+		elements.add(new Element("C", "Carbon", 12.01));
+		for (Element element : elements) {
+			if (element.getSymbol().equalsIgnoreCase(input) || element.getName().equalsIgnoreCase(input)) {
+				molarMass = element.getMolarMass();
+				output(input, console, molarMass);
+				found = true;
+			}
+		}
+		if (!found){
 			System.out.println("I don't know the element: " + input);
 		}
-		
+
 	}
 
 	public static void output(String input, Scanner console, double molarMass) {
@@ -51,4 +52,5 @@ public class MoleConversion {
 		double mole = grams / molarMass; // change molar mass to a variable
 		System.out.format(grams + " g of " + input + " is %.4f moles.%n", mole);
 	}
+
 }
