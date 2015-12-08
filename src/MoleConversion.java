@@ -5,12 +5,12 @@ import javax.swing.JPanel;
 import java.awt.Color;
 import javax.swing.JLabel;
 import javax.swing.ImageIcon;
-import java.awt.BorderLayout; 
+import java.awt.BorderLayout;
 
 public class MoleConversion {
 
 	public static void main(String[] args) {
-		
+
 		Scanner console = new Scanner(System.in); // initialize Scanner
 		int i = 1;
 		do {
@@ -23,8 +23,6 @@ public class MoleConversion {
 			}
 		} while (i == 1);
 		System.out.println("Thank you! Have a nice day!");
-
-		
 
 	}
 
@@ -93,6 +91,25 @@ public class MoleConversion {
 		elements.add(new Element("Te", "Tellerium", 127.6));
 		elements.add(new Element("I", "Iodine", 126.90447));
 		elements.add(new Element("Xe", "Xenon", 131.293));
+		elements.add(new Element("Cs", "Caesium", 132.9054519));
+		elements.add(new Element("Cs", "Cesium", 132.9054519));
+		elements.add(new Element("Ba", "Barium", 137.327));
+		elements.add(new Element("Hf", "Hafnium", 178.49));
+		elements.add(new Element("Ta", "Tantalum", 180.94788));
+		elements.add(new Element("W", "Tungsten", 183.84));
+		elements.add(new Element("Re", "Rhenium", 186.207));
+		elements.add(new Element("Os", "Osmium", 190.23));
+		elements.add(new Element("Ir", "Iridium", 192.217));
+		elements.add(new Element("Au", "Gold", 196.966569));
+		elements.add(new Element("Hg", "Mercury", 200.59));
+		elements.add(new Element("Tl", "Thallium", 204.3833));
+		elements.add(new Element("Pb", "Lead", 207.2));
+		elements.add(new Element("Bi", "Bismuth", 208.98040));
+		elements.add(new Element("Po", "Polonium", 208.9824));
+		elements.add(new Element("At", "Astatine", 209.9871));
+		elements.add(new Element("Rn", "Radon", 222.0176));
+		
+		
 		for (Element element : elements) {
 			if (element.getSymbol().equalsIgnoreCase(input) || element.getName().equalsIgnoreCase(input)) {
 				molarMass = element.getMolarMass();
@@ -101,7 +118,7 @@ public class MoleConversion {
 				found = true;
 			}
 		}
-		if (!found){
+		if (!found) {
 			System.out.println("I don't know the element: " + input);
 		}
 
