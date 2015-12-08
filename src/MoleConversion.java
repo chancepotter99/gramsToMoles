@@ -108,6 +108,20 @@ public class MoleConversion {
 		elements.add(new Element("Po", "Polonium", 208.9824));
 		elements.add(new Element("At", "Astatine", 209.9871));
 		elements.add(new Element("Rn", "Radon", 222.0176));
+		elements.add(new Element("Fr", "Francium", 223.020));
+		elements.add(new Element("Ra", "Radium", 226.025));
+		elements.add(new Element("Rf", "Rutherfordium", 261));
+		elements.add(new Element("Db", "Dubnium", 262));
+		elements.add(new Element("Sg", "Seaborgium", 266));
+		elements.add(new Element("Bh", "Bohrium", 264));
+		elements.add(new Element("Hs", "Hassium", 269));
+		elements.add(new Element("Mt", "Meitnerium", 268));
+		elements.add(new Element("Ds", "Darmstadtium", 269));
+		elements.add(new Element("Rg", "Roentgenium", 272));
+		elements.add(new Element("Cn", "Copernicium", 277));
+		elements.add(new Element("Fl", "Flevorium", 289));
+		elements.add(new Element("Lv", "Livermorium", 298));
+
 		
 		
 		for (Element element : elements) {
