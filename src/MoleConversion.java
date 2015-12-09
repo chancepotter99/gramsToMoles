@@ -121,6 +121,21 @@ public class MoleConversion {
 		elements.add(new Element("Cn", "Copernicium", 277));
 		elements.add(new Element("Fl", "Flevorium", 289));
 		elements.add(new Element("Lv", "Livermorium", 298));
+		elements.add(new Element("La", "Lanthanum", 138.90547));
+		elements.add(new Element("Ce", "Cerium", 140.116));
+		elements.add(new Element("Pr", "Praseodymium", 140.90765));
+		elements.add(new Element("Nd", "Neodymium", 144.242));
+		elements.add(new Element("Pm", "Promethium", 145));
+		elements.add(new Element("Sm", "Samarium", 150.36));
+		elements.add(new Element("Eu", "Europium", 151.964));
+		elements.add(new Element("Gd", "Gadolinium", 157.25));
+		elements.add(new Element("Tb", "Terbium", 158.92535));
+		elements.add(new Element("Dy", "Dysprosium", 162.5));
+		elements.add(new Element("Ho", "Holmium", 164.93032));
+		elements.add(new Element("Er", "Erbium", 167.259));
+		elements.add(new Element("Tm", "Thulium", 168.93421));
+		elements.add(new Element("Yb", "Ytterbium", 173.054));
+		elements.add(new Element("Lu", "Lutetium", 174.9668));
 
 		
 		
