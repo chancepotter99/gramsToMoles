@@ -27,13 +27,25 @@ public class MoleConversion {
 	}
 
 	public static void converter(Scanner console) {
-		System.out.println("What element is being converted?");
-		String input = console.next();
-		testElementInput(input, console);
+		System.out.println("Convert: 1. Moles to Grams");
+		System.out.println("\t 2. Grams to Moles");
+		String oneOrTwo = console.next();
+		if (oneOrTwo.equals("1")) {
+			System.out.println("What element is being converted?");
+			String input = console.next();
+			testElementInput(input, console, 1);
+		} else if (oneOrTwo.equals("2")) {
+			System.out.println("What element is being converted?");
+			String input = console.next();
+			testElementInput(input, console, 2);
+		} else {
+			System.out.println("Error: Please choose 1 or 2.");
+			converter(console);
+		}
 
 	}
 
-	public static void testElementInput(String input, Scanner console) {
+	public static void testElementInput(String input, Scanner console, int oneOrTwo) {
 		double molarMass;
 		boolean found = false;
 		List<Element> elements = new ArrayList<Element>();
@@ -151,15 +163,12 @@ public class MoleConversion {
 		elements.add(new Element("Md", "Mendelevium", 258));
 		elements.add(new Element("No", "Nobelium", 259));
 		elements.add(new Element("Lr", "Lawrencium", 262));
-		
 
-		
-		
 		for (Element element : elements) {
 			if (element.getSymbol().equalsIgnoreCase(input) || element.getName().equalsIgnoreCase(input)) {
 				molarMass = element.getMolarMass();
 				String name = element.getName();
-				output(console, molarMass, name);
+				output(console, molarMass, name, oneOrTwo);
 				found = true;
 			}
 		}
@@ -169,11 +178,18 @@ public class MoleConversion {
 
 	}
 
-	public static void output(Scanner console, double molarMass, String name) {
-		System.out.println("Grams: ");
-		double grams = console.nextDouble();
-		double mole = grams / molarMass; // change molar mass to a variable
-		System.out.format(grams + " g of " + name + " is %.4f moles.%n", mole);
+	public static void output(Scanner console, double molarMass, String name, int oneOrTwo) {
+		if (oneOrTwo == 2) {
+			System.out.println("Grams: ");
+			double grams = console.nextDouble();
+			double mole = grams / molarMass; // change molar mass to a variable
+			System.out.format(grams + " g of " + name + " is %.4f moles.%n", mole);
+		} else {
+			System.out.println("Moles: ");
+			double moles = console.nextDouble();
+			double grams = moles * molarMass;
+			System.out.format(moles + " moles of " + name + " is %.2f g.%n", grams);
+		}
 	}
 
 }
