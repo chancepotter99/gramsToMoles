@@ -125,7 +125,7 @@ public class MoleConversion {
 		elements.add(new Element("Ce", "Cerium", 140.116));
 		elements.add(new Element("Pr", "Praseodymium", 140.90765));
 		elements.add(new Element("Nd", "Neodymium", 144.242));
-		elements.add(new Element("Pm", "Promethium", 145));
+		elements.add(new Element("Pm", "Promethium", 144.913));
 		elements.add(new Element("Sm", "Samarium", 150.36));
 		elements.add(new Element("Eu", "Europium", 151.964));
 		elements.add(new Element("Gd", "Gadolinium", 157.25));
@@ -136,6 +136,22 @@ public class MoleConversion {
 		elements.add(new Element("Tm", "Thulium", 168.93421));
 		elements.add(new Element("Yb", "Ytterbium", 173.054));
 		elements.add(new Element("Lu", "Lutetium", 174.9668));
+		elements.add(new Element("Ac", "Actinium", 227));
+		elements.add(new Element("Th", "Thorium", 232.03806));
+		elements.add(new Element("Pa", "Protactinium", 231.03588));
+		elements.add(new Element("U", "Uranium", 238.02891));
+		elements.add(new Element("Np", "Neptunium", 237));
+		elements.add(new Element("Pu", "Plutonium", 244));
+		elements.add(new Element("Am", "Americium", 243));
+		elements.add(new Element("Cm", "Curium", 247));
+		elements.add(new Element("Bk", "Berkelium", 247));
+		elements.add(new Element("Cf", "Californium", 251));
+		elements.add(new Element("Es", "Einsteinium", 252));
+		elements.add(new Element("Fm", "Fermium", 257));
+		elements.add(new Element("Md", "Mendelevium", 258));
+		elements.add(new Element("No", "Nobelium", 259));
+		elements.add(new Element("Lr", "Lawrencium", 262));
+		
 
 		
 		
