@@ -1,13 +1,26 @@
-import java.util.*;
-import javax.swing.JFrame;
-import java.awt.Graphics;
-import javax.swing.JPanel;
-import java.awt.Color;
-import javax.swing.JLabel;
-import javax.swing.ImageIcon;
-import java.awt.BorderLayout;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
 
 public class MoleConversion {
+	/* 1. Ask Moles to grams or grams to moles
+	 * 2. If moles, ask for number of moles
+	 * 3. If grams, ask for number of grams
+	 * 4. Ask for element name/symbol
+	 * 5. Look up conversion for element
+	 * 6. Perform conversion
+	 * 7. Return result
+	 * 8. Quit or Repeat 
+	 *
+	 * request.isGrams(false)
+	 * request.setValue(1.675)
+	 * request.setElement("Au") (or request.setElement("Gold"))
+	 * 
+	 * request = getMolesOrGrams()
+	 * request = getMolesOrGramValue(request)
+	 * request = getEelement(request)
+	 * 
+	 **/
 
 	public static void main(String[] args) {
 
@@ -175,7 +188,6 @@ public class MoleConversion {
 		if (!found) {
 			System.out.println("I don't know the element: " + input);
 		}
-
 	}
 
 	public static void output(Scanner console, double molarMass, String name, int oneOrTwo) {
