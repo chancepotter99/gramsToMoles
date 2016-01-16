@@ -3,21 +3,16 @@ import java.util.List;
 import java.util.Scanner;
 
 public class MoleConversion {
-	/* 1. Ask Moles to grams or grams to moles
-	 * 2. If moles, ask for number of moles
-	 * 3. If grams, ask for number of grams
-	 * 4. Ask for element name/symbol
-	 * 5. Look up conversion for element
-	 * 6. Perform conversion
-	 * 7. Return result
-	 * 8. Quit or Repeat 
+	/*
+	 * 1. Ask Moles to grams or grams to moles 2. If moles, ask for number of
+	 * moles 3. If grams, ask for number of grams 4. Ask for element name/symbol
+	 * 5. Look up conversion for element 6. Perform conversion 7. Return result
+	 * 8. Quit or Repeat
 	 *
-	 * request.isGrams(false)
-	 * request.setValue(1.675)
-	 * request.setElement("Au") (or request.setElement("Gold"))
+	 * request.isGrams(false) request.setValue(1.675) request.setElement("Au")
+	 * (or request.setElement("Gold"))
 	 * 
-	 * request = getMolesOrGrams()
-	 * request = getMolesOrGramValue(request)
+	 * request = getMolesOrGrams() request = getMolesOrGramValue(request)
 	 * request = getEelement(request)
 	 * 
 	 **/
@@ -25,9 +20,15 @@ public class MoleConversion {
 	public static void main(String[] args) {
 
 		Scanner console = new Scanner(System.in); // initialize Scanner
+		Request request = new Request();
 		int i = 1;
 		do {
-			converter(console);
+			request.isGrams(converter(console));
+			gramsOrMolesValue(console, request);
+			System.out.println("Element: ");
+			String input = console.next();
+			testElementInput(input, console, request);
+			output(request);
 			System.out.println("Would you like to quit? (y/n)");
 			if (console.next().equalsIgnoreCase("y")) {
 				i--;
@@ -39,26 +40,22 @@ public class MoleConversion {
 
 	}
 
-	public static void converter(Scanner console) {
+	public static boolean converter(Scanner console) {
 		System.out.println("Convert: 1. Moles to Grams");
 		System.out.println("\t 2. Grams to Moles");
 		String oneOrTwo = console.next();
 		if (oneOrTwo.equals("1")) {
-			System.out.println("What element is being converted?");
-			String input = console.next();
-			testElementInput(input, console, 1);
+			return true;
 		} else if (oneOrTwo.equals("2")) {
-			System.out.println("What element is being converted?");
-			String input = console.next();
-			testElementInput(input, console, 2);
+			return false;
 		} else {
 			System.out.println("Error: Please choose 1 or 2.");
 			converter(console);
 		}
-
+		throw new IllegalArgumentException("Please choose 1 or 2.");
 	}
 
-	public static void testElementInput(String input, Scanner console, int oneOrTwo) {
+	public static void testElementInput(String input, Scanner console, Request request) {
 		double molarMass;
 		boolean found = false;
 		List<Element> elements = new ArrayList<Element>();
@@ -181,7 +178,8 @@ public class MoleConversion {
 			if (element.getSymbol().equalsIgnoreCase(input) || element.getName().equalsIgnoreCase(input)) {
 				molarMass = element.getMolarMass();
 				String name = element.getName();
-				output(console, molarMass, name, oneOrTwo);
+				request.setElement(name);
+				request.setMolarMass(molarMass);
 				found = true;
 			}
 		}
@@ -190,17 +188,36 @@ public class MoleConversion {
 		}
 	}
 
-	public static void output(Scanner console, double molarMass, String name, int oneOrTwo) {
-		if (oneOrTwo == 2) {
-			System.out.println("Grams: ");
-			double grams = console.nextDouble();
-			double mole = grams / molarMass; // change molar mass to a variable
-			System.out.format(grams + " g of " + name + " is %.4f moles.%n", mole);
-		} else {
+	public static void gramsOrMolesValue(Scanner console, Request request) {
+		if (request.getMolesOrGrams()) {
 			System.out.println("Moles: ");
 			double moles = console.nextDouble();
-			double grams = moles * molarMass;
-			System.out.format(moles + " moles of " + name + " is %.2f g.%n", grams);
+			request.setValue(moles);
+			// double grams = console.nextDouble();
+			// double mole = grams / molarMass; // change molar mass to a
+			// variable
+			// System.out.format(grams + " g of " + name + " is %.4f moles.%n",
+			// mole);
+		} else {
+			System.out.println("Grams: ");
+			double grams = console.nextDouble();
+			request.setValue(grams);
+			// double grams = moles * molarMass;
+			// System.out.format(moles + " moles of " + name + " is %.2f g.%n",
+			// grams);
+		}
+	}
+
+	public static void output(Request request) {
+		if (request.getMolesOrGrams()) {
+			double moles = request.getMolesOrGramsValue();
+			double grams = moles * request.getMolarMass();
+			System.out.format(moles + " moles of " + request.getElement() + " is %.2f g.%n", grams);
+		} else {
+			double grams = request.getMolesOrGramsValue();
+			double mole = grams / request.getMolarMass(); // change molar mass
+															// to a variable
+			System.out.format(grams + " g of " + request.getElement() + " is %.4f moles.%n", mole);
 		}
 	}
 

@@ -26,4 +26,5 @@ public class Element {
 	public void setMolarMass(double molarMass) {
 		this.molarMass = molarMass;
 	}
+
 }
