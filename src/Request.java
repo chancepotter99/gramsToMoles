@@ -5,6 +5,7 @@ public class Request {
 	private double value;// Value of moles or grams
 	private String element;// Full name of element
 	private double molarMass;// Molar mass of the element
+	private int coefficient = 1;
 	public void isGrams(boolean isGrams) {
 		grams = isGrams;
 	}
@@ -35,6 +36,17 @@ public class Request {
 	
 	public double getMolarMass() {
 		return molarMass;
+	}
+
+	public int getCoefficient() {
+		return coefficient;
+	}
+
+	public void setCoefficient(int coefficient) {
+		if(coefficient < 1) {
+			throw new IllegalArgumentException("Coefficient cannot be less than 1");
+		}
+		this.coefficient = coefficient;
 	}
 	
 	

@@ -1,6 +1,8 @@
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class MoleConversion {
 	/*
@@ -21,6 +23,7 @@ public class MoleConversion {
 	 * request = getMolesOrGramValue(request)
 	 * request = getEelement(request)
 	 * 
+	 * Pass by value vs. Pass by reference
 	 **/
 
 	public static void main(String[] args) {
@@ -31,8 +34,14 @@ public class MoleConversion {
 		do {
 			request.isGrams(converter(console)); // sets boolean isGrams to true or false
 			gramsOrMolesValue(console, request); // asks user for amount of moles or grams
-			System.out.println("Element: "); // prompts user for element name or symbol
+			System.out.println("Chemical Formula: "); // prompts user for element name or symbol
 			String input = console.next();
+			Pattern pattern = Pattern.compile("([A-Z][a-z]?)(\\d*)");
+			Matcher matcher = pattern.matcher(input);
+			while (matcher.find()) {
+			    System.out.println("group 1: " + matcher.group(1));
+			    System.out.println("group 2: " + matcher.group(2));
+			}
 			testElementInput(input, console, request); 
 			output(request);
 			System.out.println("Would you like to quit? (y/n)");
@@ -61,11 +70,11 @@ public class MoleConversion {
 		}
 		throw new IllegalArgumentException("Please choose 1 or 2.");
 	}
-
-	public static void testElementInput(String input, Scanner console, Request request) {
 		/* Tests input to ensure valid element name or symbol
 		 * Stores element name and molar mass in request object for future use
 		 */
+	public static void testElementInput(String input, Scanner console, Request request) {
+		
 		double molarMass;
 		boolean found = false;
 		List<Element> elements = new ArrayList<Element>(); // List of all element names,
@@ -212,14 +221,14 @@ public class MoleConversion {
 	}
 
 	public static void output(Request request) {
-		//Calculates and outputs the appropriate measurment
+		//Calculates and outputs the appropriate measurement
 		if (request.getMolesOrGrams()) {
 			double moles = request.getMolesOrGramsValue();
-			double grams = moles * request.getMolarMass();
+			double grams = moles * request.getMolarMass() * request.getCoefficient();
 			System.out.format(moles + " moles of " + request.getElement() + " is %.2f g.%n", grams);
 		} else {
 			double grams = request.getMolesOrGramsValue();
-			double mole = grams / request.getMolarMass(); 
+			double mole = (grams / request.getMolarMass()) * request.getCoefficient(); 
 			System.out.format(grams + " g of " + request.getElement() + " is %.4f moles.%n", mole);
 		}
 	}
