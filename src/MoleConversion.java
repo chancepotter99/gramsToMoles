@@ -4,15 +4,21 @@ import java.util.Scanner;
 
 public class MoleConversion {
 	/*
-	 * 1. Ask Moles to grams or grams to moles 2. If moles, ask for number of
-	 * moles 3. If grams, ask for number of grams 4. Ask for element name/symbol
-	 * 5. Look up conversion for element 6. Perform conversion 7. Return result
+	 * 1. Ask Moles to grams or grams to moles 
+	 * 2. If moles, ask for number of moles 
+	 * 3. If grams, ask for number of grams 
+	 * 4. Ask for element name/symbol
+	 * 5. Look up conversion for element 
+	 * 6. Perform conversion
+	 * 7. Return result
 	 * 8. Quit or Repeat
 	 *
-	 * request.isGrams(false) request.setValue(1.675) request.setElement("Au")
-	 * (or request.setElement("Gold"))
+	 * request.isGrams(false) 
+	 * request.setValue(1.675) 
+	 * request.setElement("Au") (or request.setElement("Gold"))
 	 * 
-	 * request = getMolesOrGrams() request = getMolesOrGramValue(request)
+	 * request = getMolesOrGrams() 
+	 * request = getMolesOrGramValue(request)
 	 * request = getEelement(request)
 	 * 
 	 **/
@@ -23,11 +29,11 @@ public class MoleConversion {
 		Request request = new Request();
 		int i = 1;
 		do {
-			request.isGrams(converter(console));
-			gramsOrMolesValue(console, request);
-			System.out.println("Element: ");
+			request.isGrams(converter(console)); // sets boolean isGrams to true or false
+			gramsOrMolesValue(console, request); // asks user for amount of moles or grams
+			System.out.println("Element: "); // prompts user for element name or symbol
 			String input = console.next();
-			testElementInput(input, console, request);
+			testElementInput(input, console, request); 
 			output(request);
 			System.out.println("Would you like to quit? (y/n)");
 			if (console.next().equalsIgnoreCase("y")) {
@@ -41,6 +47,7 @@ public class MoleConversion {
 	}
 
 	public static boolean converter(Scanner console) {
+		//Ask for Moles to Grams or Grams to Moles conversion.
 		System.out.println("Convert: 1. Moles to Grams");
 		System.out.println("\t 2. Grams to Moles");
 		String oneOrTwo = console.next();
@@ -56,10 +63,13 @@ public class MoleConversion {
 	}
 
 	public static void testElementInput(String input, Scanner console, Request request) {
+		/* Tests input to ensure valid element name or symbol
+		 * Stores element name and molar mass in request object for future use
+		 */
 		double molarMass;
 		boolean found = false;
-		List<Element> elements = new ArrayList<Element>();
-		elements.add(new Element("H", "Hydrogen", 1.00794));
+		List<Element> elements = new ArrayList<Element>(); // List of all element names,
+		elements.add(new Element("H", "Hydrogen", 1.00794));//symbols, and molar masses
 		elements.add(new Element("He", "Helium", 4.002602));
 		elements.add(new Element("Li", "Lithium", 6.941));
 		elements.add(new Element("Be", "Beryllium", 9.012182));
@@ -189,34 +199,27 @@ public class MoleConversion {
 	}
 
 	public static void gramsOrMolesValue(Scanner console, Request request) {
+		// Asks for value of measurement being converted
 		if (request.getMolesOrGrams()) {
 			System.out.println("Moles: ");
 			double moles = console.nextDouble();
 			request.setValue(moles);
-			// double grams = console.nextDouble();
-			// double mole = grams / molarMass; // change molar mass to a
-			// variable
-			// System.out.format(grams + " g of " + name + " is %.4f moles.%n",
-			// mole);
 		} else {
 			System.out.println("Grams: ");
 			double grams = console.nextDouble();
 			request.setValue(grams);
-			// double grams = moles * molarMass;
-			// System.out.format(moles + " moles of " + name + " is %.2f g.%n",
-			// grams);
 		}
 	}
 
 	public static void output(Request request) {
+		//Calculates and outputs the appropriate measurment
 		if (request.getMolesOrGrams()) {
 			double moles = request.getMolesOrGramsValue();
 			double grams = moles * request.getMolarMass();
 			System.out.format(moles + " moles of " + request.getElement() + " is %.2f g.%n", grams);
 		} else {
 			double grams = request.getMolesOrGramsValue();
-			double mole = grams / request.getMolarMass(); // change molar mass
-															// to a variable
+			double mole = grams / request.getMolarMass(); 
 			System.out.format(grams + " g of " + request.getElement() + " is %.4f moles.%n", mole);
 		}
 	}

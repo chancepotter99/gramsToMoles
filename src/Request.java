@@ -1,9 +1,10 @@
 
 public class Request {
-	private boolean grams;
-	private double value;
-	private String element;
-	private double molarMass;
+	
+	private boolean grams;// Mole to gram or gram to mole conversion
+	private double value;// Value of moles or grams
+	private String element;// Full name of element
+	private double molarMass;// Molar mass of the element
 	public void isGrams(boolean isGrams) {
 		grams = isGrams;
 	}
