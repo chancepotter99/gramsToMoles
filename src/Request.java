@@ -25,7 +25,7 @@ public class Request {
 
 	public Element getElement(String elementNameOrSymbol) {
 		for (Element element : elements) {
-			if (element.getName().equals(elementNameOrSymbol) || element.getName().equals(elementNameOrSymbol)) {
+			if (element.getName().equalsIgnoreCase(elementNameOrSymbol) || element.getName().equalsIgnoreCase(elementNameOrSymbol)) {
 				return element;
 			}
 		}
