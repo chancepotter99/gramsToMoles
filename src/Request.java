@@ -1,53 +1,51 @@
+import java.util.ArrayList;
+import java.util.List;
 
 public class Request {
-	
-	private boolean grams;// Mole to gram or gram to mole conversion
-	private double value;// Value of moles or grams
-	private String element;// Full name of element
-	private double molarMass;// Molar mass of the element
-	private int coefficient = 1;
-	public void isGrams(boolean isGrams) {
-		grams = isGrams;
-	}
-	
-	public void setValue(double elementValue) {
-		value = elementValue;
-	}
-	
-	public void setElement(String elementName) {
-		element = elementName;
-	}
-	
-	public void setMolarMass(double molarMassValue) {
-		molarMass = molarMassValue;
-	}
-	
-	public boolean getMolesOrGrams() {
-		return grams;
-	}
-	
-	public double getMolesOrGramsValue() {
-		return value;
-	}
-	
-	public String getElement() {
-		return element;
-	}
-	
-	public double getMolarMass() {
-		return molarMass;
+	private List<Element> elements = new ArrayList<>();
+	private boolean useGrams = false;// Mole to gram or gram to mole conversion
+	private double gramsOrMolarMass = 0;
+	private String input;
+
+	public boolean useGrams() {
+		return useGrams;
 	}
 
-	public int getCoefficient() {
-		return coefficient;
+	public void setUseGrams(boolean useGrams) {
+		this.useGrams = useGrams;
 	}
 
-	public void setCoefficient(int coefficient) {
-		if(coefficient < 1) {
-			throw new IllegalArgumentException("Coefficient cannot be less than 1");
+	public double getGramsOrMolarMass() {
+		return gramsOrMolarMass;
+	}
+
+	public void setGramsOrMolarMass(double gramsOrMolarMass) {
+		this.gramsOrMolarMass = gramsOrMolarMass;
+	}
+
+	public Element getElement(String elementNameOrSymbol) {
+		for (Element element : elements) {
+			if (element.getName().equalsIgnoreCase(elementNameOrSymbol) || element.getName().equalsIgnoreCase(elementNameOrSymbol)) {
+				return element;
+			}
 		}
-		this.coefficient = coefficient;
+
+		return null;
 	}
-	
-	
+
+	public void addElement(Element element) {
+		elements.add(element);
+	}
+
+	public List<Element> getElements() {
+		return elements;
+	}
+
+	public void setInput(String input) {
+		this.input = input;
+	}
+
+	public String getInput() {
+		return input;
+	}
 }
