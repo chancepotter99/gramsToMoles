@@ -173,8 +173,6 @@ public class MoleConversion {
 				while (matcher.find()) {
 					String elementSymbol = matcher.group(1);
 					String coefficientString = matcher.group(2);
-					System.out.println("group 1: " + elementSymbol);
-					System.out.println("group 2: " + coefficientString);
 
 					// the element symbol should not be null or empty
 					if (elementSymbol != null && !elementSymbol.equals("")) {
@@ -257,9 +255,9 @@ public class MoleConversion {
 	public static void output(Request request) {
 		//Calculates and outputs the appropriate measurement
 		if (request.useGrams()) {
-			computeGrams(request);
-		} else {
 			computeMoles(request);
+		} else {
+			computeGrams(request);
 		}
 	}
 
@@ -271,8 +269,9 @@ public class MoleConversion {
 		double moles = 0;
 		double grams = request.getGramsOrMolarMass();
 		for (Element element : request.getElements()) {
-			moles = moles + (grams / element.getMolarMass() * element.getCoefficient());
+			moles += (element.getMolarMass() * element.getCoefficient());
 		}
+		moles = grams / moles;
 		System.out.format(grams + " g of " + request.getInput() + " is %.4f moles.%n", moles);
 	}
 
