@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.lang.Integer;
 import java.util.List;
 import java.util.Scanner;
 import java.util.regex.Matcher;
@@ -36,12 +37,44 @@ public class MoleConversion {
 			gramsOrMolesValue(console, request); // asks user for amount of moles or grams
 			System.out.println("Chemical Formula: "); // prompts user for element name or symbol
 			String input = console.next();
+			
 			Pattern pattern = Pattern.compile("([A-Z][a-z]?)(\\d*)");
-			Matcher matcher = pattern.matcher(input);
-			while (matcher.find()) {
-			    System.out.println("group 1: " + matcher.group(1));
-			    System.out.println("group 2: " + matcher.group(2));
-			}
+		    Matcher matcher = pattern.matcher(input);
+		    int j = 0;
+		    String[] atomsNum = new String[input.length()];
+		    while (matcher.find()) {
+		        String group = matcher.group();
+		        System.out.println(group);
+		        atomsNum[j] = group;
+		        j++;
+		    }
+		    String[] atomsClone = new String[j];
+		    for (int z = 0; z < j; z++) {
+		    	atomsClone[z] = atomsNum[z];
+		    }
+		    Pattern pattern2 = Pattern.compile("([A-Z][a-z]?)");
+		    Pattern pattern3 = Pattern.compile("(\\d*)");
+		    String[] atom = new String[j];
+		    int[] coefficients = new int[j];
+		    for (int y = 0; y < j; y++) {
+		    	Matcher matcher2 = pattern2.matcher(atomsClone[y]);
+		    	Matcher matcher3 = pattern3.matcher(atomsClone[y]);
+		    	while(matcher2.find()) {
+		    		atom[y] = matcher2.group();
+		    		
+		    	}
+		    	while (matcher3.find()) {
+		    		String num = matcher3.group();
+		    		if (num.equals("")) {
+		    			num = "1";
+		    		}
+		    		
+		    		coefficients[y] = Integer.parseInt(num);
+		    		
+		    	}
+		    	System.out.println(atom[y] + coefficients[y]);
+		    	
+		    }
 			testElementInput(input, console, request); 
 			output(request);
 			System.out.println("Would you like to quit? (y/n)");
@@ -55,6 +88,11 @@ public class MoleConversion {
 
 	}
 
+	/**
+	 * 
+	 * @param console
+	 * @return True or false based on conversion type
+	 */
 	public static boolean converter(Scanner console) {
 		//Ask for Moles to Grams or Grams to Moles conversion.
 		System.out.println("Convert: 1. Moles to Grams");
@@ -70,9 +108,13 @@ public class MoleConversion {
 		}
 		throw new IllegalArgumentException("Please choose 1 or 2.");
 	}
-		/* Tests input to ensure valid element name or symbol
-		 * Stores element name and molar mass in request object for future use
-		 */
+	
+	/**
+	 * 
+	 * @param input
+	 * @param console
+	 * @param request
+	 */
 	public static void testElementInput(String input, Scanner console, Request request) {
 		
 		double molarMass;
@@ -207,6 +249,11 @@ public class MoleConversion {
 		}
 	}
 
+	/**
+	 * 
+	 * @param console
+	 * @param request
+	 */
 	public static void gramsOrMolesValue(Scanner console, Request request) {
 		// Asks for value of measurement being converted
 		if (request.getMolesOrGrams()) {
@@ -219,9 +266,12 @@ public class MoleConversion {
 			request.setValue(grams);
 		}
 	}
-
+	
+	/**
+	 * Prints the opposite measurement after conversion.
+	 * @param request 
+	 */
 	public static void output(Request request) {
-		//Calculates and outputs the appropriate measurement
 		if (request.getMolesOrGrams()) {
 			double moles = request.getMolesOrGramsValue();
 			double grams = moles * request.getMolarMass() * request.getCoefficient();
