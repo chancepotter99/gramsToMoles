@@ -1,9 +1,6 @@
-import java.util.ArrayList;
 import java.lang.Integer;
-import java.util.List;
 import java.util.Scanner;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+
 
 public class MoleConversion {
 	/*
@@ -26,100 +23,12 @@ public class MoleConversion {
 	 * 
 	 * Pass by value vs. Pass by reference
 	 **/
+	
 
 	public static void main(String[] args) {
 
-		Scanner console = new Scanner(System.in); // initialize Scanner
-		Request request = new Request();
-		int i = 1;
-		do {
-			request.isGrams(converter(console)); // sets boolean isGrams to true or false
-			gramsOrMolesValue(console, request); // asks user for amount of moles or grams
-			System.out.println("Chemical Formula: "); // prompts user for element name or symbol
-			String input = console.next();
-			
-			Pattern pattern = Pattern.compile("([A-Z][a-z]?)(\\d*)");
-		    Matcher matcher = pattern.matcher(input);
-		    int j = 0;
-		    String[] atomsNum = new String[input.length()];
-		    while (matcher.find()) {
-		        String group = matcher.group();
-		        System.out.println(group);
-		        atomsNum[j] = group;
-		        j++;
-		    }
-		    String[] atomsClone = new String[j];
-		    for (int z = 0; z < j; z++) {
-		    	atomsClone[z] = atomsNum[z];
-		    }
-		    Pattern pattern2 = Pattern.compile("([A-Z][a-z]?)");
-		    Pattern pattern3 = Pattern.compile("(\\d*)");
-		    String[] atom = new String[j];
-		    int[] coefficients = new int[j];
-		    for (int y = 0; y < j; y++) {
-		    	Matcher matcher2 = pattern2.matcher(atomsClone[y]);
-		    	Matcher matcher3 = pattern3.matcher(atomsClone[y]);
-		    	while(matcher2.find()) {
-		    		atom[y] = matcher2.group();
-		    		
-		    	}
-		    	while (matcher3.find()) {
-		    		String num = matcher3.group();
-		    		if (num.equals("")) {
-		    			num = "1";
-		    		}
-		    		
-		    		coefficients[y] = Integer.parseInt(num);
-		    		
-		    	}
-		    	System.out.println(atom[y] + coefficients[y]);
-		    	
-		    }
-			testElementInput(input, console, request); 
-			output(request);
-			System.out.println("Would you like to quit? (y/n)");
-			if (console.next().equalsIgnoreCase("y")) {
-				i--;
-			} else {
-				i = 1;
-			}
-		} while (i == 1);
-		System.out.println("Thank you! Have a nice day!");
-
-	}
-
-	/**
-	 * 
-	 * @param console
-	 * @return True or false based on conversion type
-	 */
-	public static boolean converter(Scanner console) {
-		//Ask for Moles to Grams or Grams to Moles conversion.
-		System.out.println("Convert: 1. Moles to Grams");
-		System.out.println("\t 2. Grams to Moles");
-		String oneOrTwo = console.next();
-		if (oneOrTwo.equals("1")) {
-			return true;
-		} else if (oneOrTwo.equals("2")) {
-			return false;
-		} else {
-			System.out.println("Error: Please choose 1 or 2.");
-			converter(console);
-		}
-		throw new IllegalArgumentException("Please choose 1 or 2.");
-	}
-	
-	/**
-	 * 
-	 * @param input
-	 * @param console
-	 * @param request
-	 */
-	public static void testElementInput(String input, Scanner console, Request request) {
 		
-		double molarMass;
-		boolean found = false;
-		List<Element> elements = new ArrayList<Element>(); // List of all element names,
+		Array elements = new Array();
 		elements.add(new Element("H", "Hydrogen", 1.00794));//symbols, and molar masses
 		elements.add(new Element("He", "Helium", 4.002602));
 		elements.add(new Element("Li", "Lithium", 6.941));
@@ -234,19 +143,114 @@ public class MoleConversion {
 		elements.add(new Element("Md", "Mendelevium", 258));
 		elements.add(new Element("No", "Nobelium", 259));
 		elements.add(new Element("Lr", "Lawrencium", 262));
+	
+		Scanner console = new Scanner(System.in); // initialize Scanner
+		Request request = new Request();
+		int i = 1;
+		do {
+			request.isGrams(converter(console)); // sets boolean isGrams to true or false
+			gramsOrMolesValue(console, request); // asks user for amount of moles or grams
+			System.out.println("Chemical Formula: "); // prompts user for element name or symbol
+			String input = console.next();
+			request.setElement(input);
+			if (input.matches("([A-Z][a-z]?\\d*)*") || input.matches("[A-z]*")) {
+				String[] atmcoef = input.split("(?=[A-Z])");	
+				request.initializeMolarMass(atmcoef);
+				int j = atmcoef.length;
+				for (int y = 0; y < j; y++) {
+					if (!atmcoef[y].matches(".*\\d")) {
+						atmcoef[y] = atmcoef[y] + "1";
+					}
+		
+				}			    
+		
+				String[] atms = new String[j];
+				String[] coefsclone = new String[j];
+				int[] coefs = new int[j];
+			
+				for (int k = 0; k < j; k++) {
+					atms[k] = atmcoef[k].replaceAll("\\d*", "");
+					coefsclone[k] = atmcoef[k].replaceAll("[A-z]*", "");
+					coefs[k] = Integer.parseInt(coefsclone[k]);
+					System.out.println(coefs[k]);
+				}
+			
 
-		for (Element element : elements) {
-			if (element.getSymbol().equalsIgnoreCase(input) || element.getName().equalsIgnoreCase(input)) {
-				molarMass = element.getMolarMass();
-				String name = element.getName();
-				request.setElement(name);
-				request.setMolarMass(molarMass);
-				found = true;
+				
+				for (int y = 0; y < j; y++) {
+					
+					System.out.println(atms[y] + coefs[y]);
+					
+				}
+
+				request.setCoefficient(coefs);
+				boolean singleAtom = false;
+				if (atms.length == 1 & coefs[0] == 1) {
+					singleAtom = true;
+				}
+		    
+				output(request,  testElementInput(atms, singleAtom, console, request, elements));
+			} else {
+				error();
 			}
+			System.out.println("Would you like to quit? (y/n)");
+			if (console.next().equalsIgnoreCase("y")) {
+				i--;
+			} else {
+				i = 1;
+			}
+		} while (i == 1);
+		System.out.println("Thank you! Have a nice day!");
+
+	}
+
+	/**
+	 * 
+	 * @param console
+	 * @return True or false based on conversion type
+	 */
+	public static boolean converter(Scanner console) {
+		//Ask for Moles to Grams or Grams to Moles conversion.
+		System.out.println("Convert: 1. Moles to Grams");
+		System.out.println("\t 2. Grams to Moles");
+		String oneOrTwo = console.next();
+		if (oneOrTwo.equals("1")) {
+			return true;
+		} else if (oneOrTwo.equals("2")) {
+			return false;
+		} else {
+			System.out.println("Error: Please choose 1 or 2.");
+			return converter(console);
+		}
+	}
+	
+	/**
+	 * 
+	 * @param input
+	 * @param console
+	 * @param request
+	 */
+	public static boolean testElementInput(String[] atminput, boolean oneAtom, Scanner console, Request request, Array elements) {
+		
+		double molarMass;
+		boolean found = false;
+		
+		for(String input : atminput) {
+			for (Element element : elements.element) {
+				if (element.getSymbol().equalsIgnoreCase(input) || element.getName().equalsIgnoreCase(input)) {
+					molarMass = element.getMolarMass();
+					if (oneAtom) {
+						request.setElement(element.getName());
+					}
+					request.setMolarMass(molarMass);
+					found = true;
+				}
+			}	
 		}
 		if (!found) {
-			System.out.println("I don't know the element: " + input);
+			error();
 		}
+		return found;
 	}
 
 	/**
@@ -271,16 +275,22 @@ public class MoleConversion {
 	 * Prints the opposite measurement after conversion.
 	 * @param request 
 	 */
-	public static void output(Request request) {
-		if (request.getMolesOrGrams()) {
-			double moles = request.getMolesOrGramsValue();
-			double grams = moles * request.getMolarMass() * request.getCoefficient();
-			System.out.format(moles + " moles of " + request.getElement() + " is %.2f g.%n", grams);
-		} else {
-			double grams = request.getMolesOrGramsValue();
-			double mole = (grams / request.getMolarMass()) * request.getCoefficient(); 
-			System.out.format(grams + " g of " + request.getElement() + " is %.4f moles.%n", mole);
+	public static void output(Request request, Boolean found) {
+		if (found) {
+			if (request.getMolesOrGrams()) {
+				double moles = request.getMolesOrGramsValue();
+				double grams = moles * request.getConversionFactor();
+				System.out.format(moles + " moles of " + request.getElement() + " is %.2f g.%n", grams);
+			} else {
+				double grams = request.getMolesOrGramsValue();
+				double mole = grams / request.getConversionFactor(); 
+				System.out.format(grams + " g of " + request.getElement() + " is %.4f moles.%n", mole);
+			}
 		}
+	}
+	
+	public static void error() {
+		System.out.println("Please input a valid element or chemical formula!");
 	}
 
 }
